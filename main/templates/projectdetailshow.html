@@ -1,0 +1,25 @@
+{% extends 'basemain.html' %}
+{% block title %}  漏洞展示 {% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="panel panel-default">
+        <table class="table table-striped">
+            {% for each in bugs %}
+            <tr>
+
+                <td>漏洞名称：{{ each.bugname }}</td>
+            </tr>
+                <tr>
+                 <td>具体内容：{{ each.bugtxt |safe}}</td>
+                </tr>
+                {% empty %}
+                <p>暂无漏洞</p>
+            {% endfor %}
+        </table>
+    </div>
+
+</div>
+
+{% endblock %}
+

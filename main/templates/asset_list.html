@@ -1,0 +1,49 @@
+{% extends 'basemain.html' %}
+{% block title %}  资产列表 {% endblock %}
+
+{% block content %}
+<div class="container">
+        <div class="form-group">
+             <a class="btn btn-primary" href="{% url 'addasset' %}">导入资产</a>
+             <a class="btn btn-primary" href="{% url 'excel_export' %}">导出资产</a>
+            <label>当前域名数量:{{ countd }}</label>
+        </div>
+        <table class="table table-striped">
+            <tr>
+            <th>资产清单</th>
+            </tr>
+            {% for each in contacts %}
+            <tr>
+                <td>{{ each.subdomain |safe}}</td>
+            </tr>
+                {% empty %}
+                <p>暂无资产</p>
+            {% endfor %}
+        </table>
+        <div class="pagination">
+    <span class="step-links">
+        {% if contacts.has_previous %}
+            <a href="?page={{ contacts.previous_page_number }}">上一页</a>
+        {% endif %}
+
+        <span class="current">
+            Page {{ contacts.number }} of {{ contacts.paginator.num_pages }}.
+        </span>
+
+        {% if contacts.has_next %}
+            <a href="?page={{ contacts.next_page_number }}">下一页</a>
+        {% endif %}
+    </span>
+</div>
+    </div>
+
+</div>
+
+{% endblock %}
+
+
+{% block vuejs %}
+
+
+{% endblock %}
+

@@ -1,0 +1,65 @@
+{% extends 'basemain.html' %}
+{% block title %}   待办事项 {% endblock %}
+
+
+{% block link %}
+    <script src="/static/ckeditor/ckeditor/ckeditor.js"></script>
+{% endblock %}
+
+{% block content %}
+    <style>
+    textarea{
+        font-size: 14px;
+        color:red;
+        height: 522px;
+        width: 1000px;
+    }
+    </style>
+    <div class="container">
+    <div class="panel panel-default">
+        <div class="panel-heading">
+        事项内容
+        </div>
+        <div class="panel-body">
+        <form enctype="multipart/form-data" method="post">
+            <div class="form-group">
+                <div class="input-group">
+                    <div class="input-group-addon">待办事项：</div>
+                        <textarea   rows="30" name="todotxt">{{ toto }}</textarea>
+                </div>
+            </div>
+            <div class="btn-group btn-group-lg">
+                    <input type="button"  class="btn btn-primary" value="提交" id = "btnaddbug">
+            </div>
+        </form>
+        </div>
+    </div>
+</div>
+{% endblock %}
+{% block vuejs %}
+<script>
+$("#btnaddbug").click(function (jqE) {
+         var todotxt = $("textarea[name='todotxt']").val();
+         var urls = '/savetodo/';
+         $.ajax({
+	        url: urls,
+            type: 'POST',
+            data: {"todotxt": todotxt},
+            success: function(e){
+                var urls_re = '/savetodo/';
+                if(e == "1"){
+                    alert("更新成功");
+                    location.href= urls_re;
+                } else {
+                alert("保存失败");
+                }
+
+            },
+
+	    });
+          jqE.preventDefault();//非常重要
+     })
+/////
+</script>
+{% endblock %}
+

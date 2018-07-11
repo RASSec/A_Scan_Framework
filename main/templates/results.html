@@ -1,0 +1,74 @@
+{% extends 'basemain.html' %}
+{% block title %}  扫描结果 {% endblock %}
+
+{% block content %}
+
+<main>
+    <div class="container-fluid">
+        <h1 class="bread-crumb"> <strong>扫描结果</strong>
+            <div class="absolute-right">
+                <form action="" method="post" class="input-group search-group" data-format="HTML" data-action="notpjax">
+                    <input type="text" class="form-control" placeholder="请输入..." name="keywords" />
+                    <span class="input-group-btn"> <button class="btn btn-default" type="submit"><i class="icons-xs icons-xs-search"></i></button> </span>
+                </form>
+            </div> </h1>
+        <table class="table table-hover">
+            <thead>
+            <tr>
+                <th>网站地址</th>
+                <th>扫描结果</th>
+                <th>发现时间</th>
+            </tr>
+            </thead>
+            <tbody id="resulist">
+            </tbody>
+            <tfoot>
+            <tr>
+                <td colspan="6">
+                    <ul id="pagination-ddol" class="pagination-sm pull-right"></ul>
+                    <p class="tfoot-info">共 <span class="text-success">{{ num }}</span> 条记录</p>
+                </td>
+            </tr>
+            </tfoot>
+        </table>
+    </div>
+</main>
+{% endblock %}
+
+{% block vuejs %}
+
+    <script>
+   function listenOnclick(){
+       $('div.pre-wrapper:not(.one-line) > a.btn-collapse').on('click', function() {
+              if ( !$(this).hasClass('open') ) {
+                  $(this).addClass('open').text('－Close').parent('div.pre-wrapper').height('auto');
+              } else {
+                  $(this).removeClass('open').text('＋Detail').parent('div.pre-wrapper').height(34);
+              }
+              return false;
+          });
+   };
+    function default_date() {
+        $.get('/results/?page=1',{}, function(data) {
+            $('#resulist').html(data);
+            listenOnclick();
+        });
+    };
+    default_date();
+    $('#pagination-ddol').twbsPagination({
+        totalPages: {{ num }}/10 + 1 ,
+        visiblePages: 7,
+        onPageClick: function (event, page) {
+            var url='/results/?page=' + page;
+            $.get(url,{}, function(data) {
+                $('#resulist').html(data);
+                listenOnclick();
+            }).fail(function() {
+                $('#resulist').html('查询失败');
+            })
+        }
+    });
+</script>
+
+{% endblock %}
+

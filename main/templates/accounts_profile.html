@@ -1,0 +1,79 @@
+{% extends 'basemain.html' %}
+{% block title %}  个人修改中心 {% endblock %}
+
+{% block content %}
+<div id="app">
+<table class="table table-bordered">
+	<caption>个人信息修改</caption>
+	<thead>
+		<tr>
+			<th>项目</th>
+			<th>值</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr>
+			<td>账户</td>
+			<td><span v-text="email" class="form-control"></span></td>
+		</tr>
+		<tr>
+			<td>姓名</td>
+			<td><input v-model="name" class="form-control"></input></td>
+		</tr>
+    		<tr>
+			<td>job</td>
+			<td><input v-model="job" class="form-control"></input></td>
+		</tr>
+    		<tr>
+			<td>age</td>
+			<td><input v-model="age" class="form-control"></input></td>
+		</tr>
+        		<tr>
+			<td>iphone</td>
+			<td><input v-model="iphone" class="form-control"></input></td>
+		</tr>
+	</tbody>
+</table>
+<button @click="submit" class="btn btn-primary">保存数据</button>
+    </div>
+{% endblock %}
+
+{% block vuejs %}
+    <script type="text/javascript">
+    const vm = new Vue({
+        el: '#app',
+        data: {
+            email: '{{ request.user.email }}',
+            name: '{{ request.user.name }}',
+            job: '{{ request.user.job }}',
+            age: '{{ request.user.age }}',
+            iphone: '{{ request.user.iphone }}',
+        },
+        methods: {
+            submit() {
+                data_to_send = {
+                    email: this.email,
+                    name: this.name,
+                    job: this.job,
+                    age: this.age,
+                    iphone: this.iphone,
+
+                };
+                console.log(data_to_send);
+                data_to_send = JSON.stringify(data_to_send);
+                console.log(data_to_send);
+                $.post('/accounts/profile/', data_to_send, function (r, err) {
+                    if (err === 'success') {
+                        alert('更新数据成功');
+                        return location.assign('/');
+                    } else {
+                        return console.log(err);
+                    }
+
+                });
+            },
+        },
+    });
+    </script>
+{% endblock %}
+

@@ -1,0 +1,31 @@
+{% load i18n staticfiles %}<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css">
+	<script src="https://cdn.bootcss.com/jquery/2.1.1/jquery.min.js"></script>
+	<script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+	<title>{% block title %}{{ title|default:"django-users2"}}{% endblock %}</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta name="description" content="">
+	<meta name="author" content="">
+</head>
+<body>
+
+<nav class="navbar navbar-default">
+	<div class="container-fluid">
+		<a class="navbar-brand" href="/">返回首页</a>
+	</div>
+</nav>
+<div class="container jumbotron">
+	{% if messages %}
+		{% for message in messages %}
+			<div class="alert {% if message.tags %}alert-{{ message.tags }}"{% endif %}>{{ message }}</div>
+		{% endfor %}
+	{% endif %}
+	{% block content %}
+		<p>Use this template get you up and running with django-users2.</p>
+	{% endblock content %}
+</div>
+</body>
+</html>

@@ -1,0 +1,89 @@
+{% extends 'basemain.html' %}
+{% block title %}   添加资产 {% endblock %}
+{% block content %}
+
+    <div class="container">
+    <div class="panel panel-default">
+        <div class="panel-heading">
+        新增资产
+        </div>
+        <div class="panel-body">
+        <form enctype="multipart/form-data" method="post">
+            <div class="form-group"><span class="label label-warning">第一种方式：</span><p>
+                <div class="input-group">
+                    <div class="input-group-addon">资产名字：</div>
+                    <input type="text" class="form-control" placeholder="资产名称" name="asset_domain">
+                </div>
+            </div>
+            <div class="btn-group btn-group-lg">
+                    <input type="button"  class="btn btn-primary" value="提交" id = "btnaddbug">
+            </div>
+        </form>
+        </div>
+        <div class="panel-body">
+<form enctype="multipart/form-data" method="post">
+    <div class="form-group"><span class="label label-warning">第二种方式：</span><p>
+                <div class="input-group">
+                    <input type="file" name="file" id="file_upload"/>
+                </div>
+            </div>
+            <div class="btn-group btn-group-lg">
+                <input type="button" value="提交" class="btn btn-primary" onclick="FileUpload();"/>
+            </div>
+        </form>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+
+{% block vuejs %}
+<script>
+
+$("#btnaddbug").click(function (jqE) {
+         var asset_domain = $("input[name='asset_domain']").val();
+         {#alert(asset_domain)#}
+         var urls = '/addasset/';
+         $.ajax({
+	        url: urls,
+            type: 'POST',
+            data: {"asset_domain": asset_domain},
+            success: function(e){
+                var urls_re = '/assetlist/';
+                if(e == "1"){
+                    location.href= urls_re;
+                } else {
+                alert("保存失败");
+                }
+
+            },
+
+	    });
+          jqE.preventDefault();//非常重要
+     })
+
+/////
+
+
+function FileUpload() {
+            var form_data = new FormData();
+            var file_info =$( '#file_upload')[0].files[0];
+            form_data.append('file',file_info);
+            //if(file_info==undefined)暂且不许要判断是否有附件
+                //alert('你没有选择任何文件');
+                //return false
+            $.ajax({
+                url:'/upload_ajax/',
+                type:'POST',
+                data: form_data,
+                processData: false,  // tell jquery not to process the data
+                contentType: false, // tell jquery not to set contentType
+                success: function(callback) {
+                    console.log('ok')
+                }
+            });
+
+            }
+</script>
+{% endblock %}
+

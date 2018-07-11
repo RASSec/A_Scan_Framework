@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>{% block title %}{% endblock %}</title>
+	<link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css">
+	<script src="https://cdn.bootcss.com/jquery/2.1.1/jquery.min.js"></script>
+{#	<script src="https://code.ziqiangxuetang.com/media/django/csrf.js"></script>#}
+	<script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+{#    <script src="https://cdn.bootcss.com/vue/2.4.2/vue.min.js"></script>#}
+    <script type="text/javascript" src="/static/js/vue.js"></script>
+    <script type="text/javascript" src="/static/js/csrf.js"></script>
+{#        <script src="/static/js/jquery-1.8.3.min.js"></script>#}
+    <script src="/static/js/jquery.cookie.js"></script>
+    <script src="/static/plugins/layer/layer.js"></script>
+    <script src="/static/js/csrf.js"></script>
+{#      <script src="/static/js/vendor.js"></script>#}
+      <script src="/static/js/corp.taskconfig.add.js"></script>
+<script src="/static/js/jquery.twbsPagination.js" type="text/javascript"></script>
+<script src="/static/js/jquery.twbsPagination.min.js" type="text/javascript"></script>
+{% block link %}
+{% endblock %}
+</head>
+<body>
+<nav class="navbar navbar-default navbar-fixed-top" role="navigation" style="padding-left:100px">
+	<div class="navbar-header">
+		<a class="navbar-brand" href="#">日常安全测试系统</a>
+	</div>
+	<div>
+		<ul class="nav navbar-nav">
+			<li class="active"><a href="/">首页</a></li>
+			<li><a href="/savetodo/">To-do list</a></li>
+            {% if request.user.is_authenticated %}
+            <li class="dropdown">
+				<a href="#" class="dropdown-toggle" data-toggle="dropdown">
+					资产
+					<b class="caret"></b>
+				</a>
+				<ul class="dropdown-menu">
+					<li><a href="/assetlist/">资产列表</a></li>
+					<li><a href="#">视图统计</a></li>
+				</ul>
+			</li>
+                <li class="dropdown">
+				<a href="#" class="dropdown-toggle" data-toggle="dropdown">
+					漏洞
+					<b class="caret"></b>
+				</a>
+				<ul class="dropdown-menu">
+					<li><a href="/buglist/">现有漏洞列表</a></li>
+					<li><a href="/addbug/">漏洞添加</a></li>
+					<li><a href="/listing/">所有漏洞</a></li>
+				</ul>
+			</li>
+                <li class="dropdown">
+			<a href="#" class="dropdown-toggle" data-toggle="dropdown">
+					任务
+					<b class="caret"></b>
+			</a>
+			<ul class="dropdown-menu">
+                <li><a href="/scan/">添加扫描</a></li>
+                <li><a href="/poc_list/">POC列表</a></li>
+                <li><a href="/results/">扫描结果</a></li>
+				</ul>
+			</li>
+{#                <li class="dropdown">#}
+{#			<a href="#" class="dropdown-toggle" data-toggle="dropdown">#}
+{#					插件#}
+{#					<b class="caret"></b>#}
+{#			</a>#}
+{#			<ul class="dropdown-menu">#}
+{#                <li><a href="/#">插件列表</a></li>#}
+{#					<li><a href="/#">新增插件</a></li>#}
+{#				</ul>#}
+{#			</li>#}
+{#                <li class="dropdown">#}
+{#			<a href="#" class="dropdown-toggle" data-toggle="dropdown">#}
+{#					指纹#}
+{#					<b class="caret"></b>#}
+{#			</a>#}
+{#			<ul class="dropdown-menu">#}
+{#                <li><a href="/#">临时指纹</a></li>#}
+{#					<li><a href="/#">新增指纹</a></li>#}
+{#				</ul>#}
+{#			</li>#}
+			<li class="dropdown">
+				<a href="#" class="dropdown-toggle" data-toggle="dropdown">
+					个人中心
+					<b class="caret"></b>
+				</a>
+				<ul class="dropdown-menu">
+					<li><a href="/accounts/profile/">修改个人信息</a></li>
+					<li><a href="/accounts/logout/">登出</a></li>
+				</ul>
+			</li>
+                <li><a href="#">当前用户:{{ request.user.name }}</a></li>
+            {% else %}
+
+            <li><a href="/accounts/login/">登录</a></li>
+            <li><a href="/accounts/register/">注册</a></li>
+            {% endif %}
+		</ul>
+	</div>
+</nav>
+<br><br><br>
+{% block content %}
+
+   <div class="container">
+	<div class="jumbotron">
+		<h1>记录日常</h1>
+		<p>
+
+        </p>
+		<p>
+
+		</p>
+	</div>
+</div>
+{% endblock %}
+{% block vuejs %}
+{% endblock %}
+</body>
+</html>

@@ -1,0 +1,82 @@
+{% extends 'basemain.html' %}
+{% block title %}  漏洞列表 {% endblock %}
+
+{% block content %}
+<div class="container">
+        <div class="form-group">
+             <a class="btn btn-primary" href="{% url "addbug" %}">新增漏洞</a>
+        </div>
+        <table class="table table-striped">
+            <tr>
+            <th>漏洞名称</th>
+            <th>漏洞简介</th>
+            <th>漏洞操作</th>
+            <th>漏洞发布时间</th>
+            </tr>
+            {% for each in contacts %}
+            <tr>
+                <td>{{ each.bugname |safe}}</td>
+                <td><a href="{% url 'projectdetailshow' each.id %}" class="label label-success">查看详情</a></td>
+                <td><a href="javascript:" onclick="delbug(this,{{ each.id }})" class="label label-danger">删除</a></td>
+            <td>{{ each.pub_time}}</td>
+            </tr>
+                {% empty %}
+                <p>暂无漏洞</p>
+            {% endfor %}
+        </table>
+        <div class="pagination">
+    <span class="step-links">
+        {% if contacts.has_previous %}
+            <a href="?page={{ contacts.previous_page_number }}">上一页</a>
+        {% endif %}
+        <span class="current">
+            Page {{ contacts.number }} of {{ contacts.paginator.num_pages }}.
+        </span>
+        {% if contacts.has_next %}
+            <a href="?page={{ contacts.next_page_number }}">下一页</a>
+        {% endif %}
+    </span>
+</div>
+    </div>
+
+</div>
+
+{% endblock %}
+
+
+{% block vuejs %}
+<script>
+        function delbug(the,bug_id) {
+            var bug_name = $(the).parents('tr').children('td').eq(0).text();
+    layer.open({
+	    type: 1,
+	    skin: "layui-layer-rim",
+	    area: ["400px", "200px"],
+	    title: "删除漏洞",
+	    content: '<div class="text-center" style="margin-top:20px"><p>是否确定删除该漏洞：'+bug_name+'</p></div>',
+	    btn:['确定', '取消'],
+	    yes: function(){
+		$.ajax({
+		    url: '{% url "delbug" %}',
+		    type:"POST",
+		    data: {"bug_id":bug_id},
+		    success: function(e){
+			if(e=="1"){
+			    parent.location.reload();
+			    layer.msg("has been deleted.");
+			}else if(e=="0"){
+			    layer.msg("没有登录");
+			    location.href = "/"
+            }
+			else{
+			    {layer.msg("删除失败");}
+			}
+
+		    },
+		})
+	    },
+	});
+        }
+    </script>
+{% endblock %}
+

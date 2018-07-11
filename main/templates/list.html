@@ -1,0 +1,51 @@
+{% extends 'basemain.html' %}
+{% block title %}  漏洞列表 {% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="panel panel-default">
+        <div class="panel-heading">
+        漏洞列表
+        </div>
+        <table class="table table-striped">
+            <tr>
+            <th>漏洞名称</th>
+            <th>漏洞简介</th>
+            <th>漏洞发布时间</th>
+            </tr>
+            {% for each in contacts %}
+            <tr>
+                <td>{{ each.bugname |safe}}</td>
+                <td><a href="{% url 'projectdetailshow' each.id %}" class="label label-success">查看详情</a></td>
+            <td>{{ each.pub_time}}</td>
+            </tr>
+                {% empty %}
+                <p>暂无漏洞</p>
+            {% endfor %}
+        </table>
+    <div class="pagination">
+    <span class="step-links">
+        {% if contacts.has_previous %}
+            <a href="?page={{ contacts.previous_page_number }}">previous</a>
+        {% endif %}
+
+        <span class="current">
+            Page {{ contacts.number }} of {{ contacts.paginator.num_pages }}.
+        </span>
+
+        {% if contacts.has_next %}
+            <a href="?page={{ contacts.next_page_number }}">next</a>
+        {% endif %}
+    </span>
+</div>
+    </div>
+
+</div>
+
+{% endblock %}
+
+
+{% block vuejs %}
+
+{% endblock %}
+
