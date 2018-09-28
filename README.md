@@ -20,6 +20,8 @@
     	$ sudo pip install --upgrade pip && setuptools
 3. 其他需要的安全包
 
+        $ sudo apt-get install rabbitmq-server python-flower -y
+
  		
  		
 ### 程序执行流程
@@ -31,6 +33,7 @@
 	http://192.168.31.131:5555/dashboard
 	rabbitmq 监控界面
 	http://192.168.31.131:15672
+	python manage.py runserver localhost:8001
 	
 
 
