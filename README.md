@@ -36,4 +36,8 @@
 
 __author__ : yds
 
+## Stargazers over time
+
+[![Stargazers over time](https://starchart.cc/RASSec/A_Scan_Framework.svg)](https://starchart.cc/RASSec/A_Scan_Framework)
+
 
